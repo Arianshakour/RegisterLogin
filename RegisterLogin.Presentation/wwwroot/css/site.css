@@ -1,0 +1,40 @@
+html {
+    font-size: 14px;
+}
+
+@font-face {
+    font-family: 'Yekan';
+    src: url('/Font/Yekan.ttf') format('truetype');
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Yekan', sans-serif;
+    background: linear-gradient(to right, #006055, #96c93d);
+    margin-bottom: 60px;
+}
+
+.navbar {
+    background: linear-gradient(to right, #006055, #96c93d);
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+}

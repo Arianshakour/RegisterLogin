@@ -1,0 +1,135 @@
+﻿@using RegisterLogin.Domain.ViewModels
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "ثبت نام";
+}
+<main class="client-page" id="registercontainerr">
+    <div class="register-container" id="registercontainer">
+        <header><h3> ثبت نام در سایت </h3></header>
+        <div style="text-align:center">
+            <form method="post" id="registerForm">
+                <div class="form-group inline">
+                    <div class="form-group">
+                        <input asp-for="UserName" class="form-control" placeholder="نام کاربری" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Email" class="form-control" placeholder="ایمیل" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group inline">
+                    <div class="form-group">
+                        <input asp-for="Password" class="form-control" placeholder="رمز عبور" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="RePassword" class="form-control" placeholder="تکرار رمز عبور" />
+                        <span asp-validation-for="RePassword" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input asp-for="BrithDay" class="form-control" placeholder="تاریخ تولد" />
+                    <span asp-validation-for="BrithDay" class="text-danger"></span>
+                </div>
+                <div>
+                    <button type="button" onclick="registerUserPost()" class="btn-register"> ثبت نام </button>
+                </div>
+            </form>
+            <div class="footer">
+                <p>حساب کاربری دارید؟ <a type="button" onclick="loginUser()">وارد شوید</a></p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .register-container {
+        background-color: white;
+        border-radius: 15px;
+        padding: 15px;
+        padding-top: 20px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        width: 365px;
+        text-align: center;
+        animation: slide-up 0.6s ease-in-out;
+    }
+
+    .btn-register {
+        background-color: #96c93d;
+        color: white;
+        padding: 12px 0;
+        border: none;
+        border-radius: 10px;
+        width: 100%;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-register:hover {
+            background-color: #006055;
+        }
+
+    .footer {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #000;
+    }
+
+        .footer a {
+            color: #000;
+            text-decoration: none;
+        }
+
+            .footer a:hover {
+                text-decoration: underline;
+            }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+
+        .form-group.inline {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #96c93d;
+            box-shadow: 0 0 10px rgba(150, 201, 61, 0.5);
+        }
+
+    .date-input {
+        width: 100%; /* Adjusting the width for the date field */
+    }
+
+    .form-group span {
+        display: block;
+        margin-top: 2px;
+        font-size: 10px;
+        color: red;
+    }
+</style>
+
+<div id="Container" style="display:none;">
+    <!--formha inja render mishan-->
+</div>
