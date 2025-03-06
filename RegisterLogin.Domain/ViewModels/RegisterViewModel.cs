@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RegisterLogin.Domain.Common.Datetime;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,6 +28,17 @@ namespace RegisterLogin.Domain.ViewModels
         public string RePassword { get; set; }
         [Display(Name = "تاریخ تولد")]
         [Required(ErrorMessage = "فیلد {0} نباید خالی باشد")]
-        public DateTime BrithDay { get; set; }
+        public DateTime BrithDay {
+            get
+            {
+                return DateTimeConverter.ShamsiToMiladi(PersianBrithday);
+            }
+            set
+            {
+            }
+        }
+        [Display(Name = "تاریخ تولد")]
+        [Required(ErrorMessage = "فیلد {0} نباید خالی باشد")]
+        public string PersianBrithday { get; set; }
     }
 }

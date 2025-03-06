@@ -33,6 +33,11 @@ namespace RegisterLogin.Infrastructure.Repositories.Implementation
             return _context.Members.FirstOrDefault(x => x.Email == email);
         }
 
+        public bool IsCorrectPassword(string pass)
+        {
+            return _context.Members.Any(m => m.Password == pass);
+        }
+
         public bool IsExistEmail(string email)
         {
             return _context.Members.Any(m => m.Email == email);

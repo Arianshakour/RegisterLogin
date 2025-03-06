@@ -37,11 +37,14 @@ function resetPasswordPost() {
     }).done(function (result) {
         console.log(result);
         if (result.success) {
-            $('#Container').empty();
-            var Content = result.html.replace(/(\r\n|\n|\r)/g, "");
-            $('#Container').html(Content);
-            $('#Container').show();
+            //$('#Container').empty();
+            //var Content = result.html.replace(/(\r\n|\n|\r)/g, "");
+            //$('#Container').html(Content);
+            //$('#Container').show();
             alert('رمز عبور با موفقیت تغییر یافت');
+            var Content = result.html.replace(/(\r\n|\n|\r)/g, "");
+            $("main").empty();
+            $("main").html(Content);
         } else {
             alert(result.message);
         }
@@ -68,17 +71,15 @@ function registerUserPost() {
         }
     });
 }
+//2ta func paein alan dg bela estefade shodan
 function registerUser() {
     $.ajax({
         url: "/Login/Register",
         type: "Get",
         data: {}
     }).done(function (result) {
-        $('#Container').empty();
-        $('#Container').html(result);
-        $('#Container').show();
-        $('#logincontainer').empty();
-        $('#logincontainer').hide();
+        $("main").empty();
+        $("main").html(result);
         history.replaceState(null, null, '/Login/Register');
     });
 }
@@ -105,7 +106,6 @@ function loginUserPost() {
     }).done(function (result) {
         console.log(result);
         if (result.isGrid == 1) {
-            ;
             $('#yy').empty();
             $('#yy').html(result.view);
             $('#Container').remove();
@@ -145,6 +145,34 @@ function loadRegisterPage() {
             $("main").empty();
             $("main").html(response);
             history.replaceState(null, null, '/Login/Register');
+        }
+    });
+}
+function loadChangePasswordPage() {
+    $.ajax({
+        url: '/Login/ChangePassword',
+        type: 'GET',
+        success: function (response) {
+            $("main").empty();
+            $("main").html(response);
+            history.replaceState(null, null, '/Login/ChangePassword');
+        }
+    });
+}
+function changePasswordPost() {
+    var formData = $("#ChangePasswordForm").serialize();
+    $.ajax({
+        url: "/Login/ChangePassword",
+        type: "POST",
+        data: formData,
+    }).done(function (result) {
+        console.log(result);
+        if (result.isGrid == 1) {
+            $("main").empty();
+            $("main").html(result.view);
+        } else {
+            alert('عملیات با موفقیت انجام گردید');
+            window.location.href = '/Home/Index';
         }
     });
 }

@@ -93,7 +93,8 @@ namespace RegisterLogin.Presentation.Controllers
             var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                        new Claim(ClaimTypes.Name,user.UserName)
+                        new Claim(ClaimTypes.Name,user.UserName),
+                        new Claim(ClaimTypes.Email,user.Email)
                     };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
@@ -167,7 +168,36 @@ namespace RegisterLogin.Presentation.Controllers
         }
         public IActionResult ChangePassword()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var model = new ChangePasswordViewModel
+            {
+                Email = email
+            };
+            return PartialView(model);
+        }
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordViewModel change)
+        {
+            if (!ModelState.IsValid)
+            {
+                //return View(change);
+                string v1 = ViewRendererUtils.RenderRazorViewToString(this, "~/Views/Login/ChangePassword.cshtml", change);
+                return Json(new { view = v1, isGrid = 1, message = "لطفا اطلاعات فرم را کامل و صحیح وارد کنید." });
+            }
+            if (!_loginService.IsCorrectPassword(change.Email, change.OldPassword))
+            {
+                ModelState.AddModelError("OldPassword", "رمز فعلی اشتباه است");
+                //return View(change);
+                string v1 = ViewRendererUtils.RenderRazorViewToString(this, "~/Views/Login/ChangePassword.cshtml", change);
+                return Json(new { view = v1, isGrid = 1, message = "کاربری با مشخصات یافت شده پیدا نشد." });
+            }
+            _loginService.UpdatePassword(change);
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Login");
         }
     }
 }

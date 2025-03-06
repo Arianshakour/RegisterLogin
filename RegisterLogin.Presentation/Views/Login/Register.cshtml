@@ -19,6 +19,10 @@
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <input asp-for="PersianBrithday" id="PersianBrithday" class="form-control" placeholder="تاریخ تولد" />
+                    <span asp-validation-for="PersianBrithday" class="text-danger"></span>
+                </div>
                 <div class="form-group inline">
                     <div class="form-group">
                         <input asp-for="Password" class="form-control" placeholder="رمز عبور" />
@@ -29,20 +33,24 @@
                         <span asp-validation-for="RePassword" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <input asp-for="BrithDay" class="form-control" placeholder="تاریخ تولد" />
-                    <span asp-validation-for="BrithDay" class="text-danger"></span>
-                </div>
                 <div>
                     <button type="button" onclick="registerUserPost()" class="btn-register"> ثبت نام </button>
                 </div>
             </form>
             <div class="footer">
-                <p>حساب کاربری دارید؟ <a type="button" onclick="loginUser()">وارد شوید</a></p>
+                <p>حساب کاربری دارید؟ <a type="button" onclick="loadLoginPage()">وارد شوید</a></p>
             </div>
         </div>
     </div>
 </main>
+<script>
+        $(document).ready(function () {
+        $('#PersianBrithday').persianDatepicker({
+            autoClose: true,
+            format: 'YYYY/MM/DD',
+        });
+    });
+</script>
 
 <style>
     .register-container {

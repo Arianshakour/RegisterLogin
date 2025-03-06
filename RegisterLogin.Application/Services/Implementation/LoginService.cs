@@ -47,6 +47,18 @@ namespace RegisterLogin.Application.Services.Implementation
             return member;
         }
 
+        public bool IsCorrectPassword(string email, string pass)
+        {
+            string x = FixedText.FixedEmail(email);
+            var member = _repository.GetUserByEmail(x);
+            if (member == null)
+            {
+                return false;
+            }
+            var passToHash = PasswordHelper.EncodePasswordMd5(pass);
+            return _repository.IsCorrectPassword(passToHash);
+        }
+
         public bool IsExistEmail(string email)
         {
             return _repository.IsExistEmail(email);
@@ -67,6 +79,14 @@ namespace RegisterLogin.Application.Services.Implementation
                 return null;
             }
             return member;
+        }
+
+        public void UpdatePassword(ChangePasswordViewModel change)
+        {
+            var member = GetUserByEmail(change.Email);
+            member.Password = PasswordHelper.EncodePasswordMd5(change.NewPassword);
+            _repository.UpdateUser(member);
+            _repository.Save();
         }
 
         public void UpdateUser(ResetPasswordViewModel reset)

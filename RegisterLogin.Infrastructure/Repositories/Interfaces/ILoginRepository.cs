@@ -16,5 +16,6 @@ namespace RegisterLogin.Infrastructure.Repositories.Interfaces
         Member? GetUser(string email, string pass);
         Member? GetUserByEmail(string email);
         void UpdateUser(Member member);
+        bool IsCorrectPassword(string pass);
     }
 }

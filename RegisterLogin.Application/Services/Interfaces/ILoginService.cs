@@ -16,6 +16,8 @@ namespace RegisterLogin.Application.Services.Interfaces
         Member? LoginMember(LoginViewModel login);
         Member? GetUserByEmail(string email);
         void UpdateUser(ResetPasswordViewModel reset);
+        bool IsCorrectPassword(string email, string pass);
+        void UpdatePassword(ChangePasswordViewModel change);
 
     }
 }
