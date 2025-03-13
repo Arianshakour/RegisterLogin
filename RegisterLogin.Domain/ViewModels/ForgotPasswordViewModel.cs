@@ -13,5 +13,7 @@ namespace RegisterLogin.Domain.ViewModels
         [Required(ErrorMessage = "فیلد {0} نباید خالی باشد")]
         [EmailAddress(ErrorMessage = "قالب {0} اشتباه است")]
         public string Email { get; set; }
+        [Display(Name = "کد ارسالی به موبایل / ایمیل")]
+        public int VerificationCode { get; set; }
     }
 }

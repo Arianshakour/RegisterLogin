@@ -106,6 +106,12 @@ namespace RegisterLogin.Presentation.Controllers
             ViewBag.IsSuccess = true;
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
+        public IActionResult LoadLogout()
+        {
+            return PartialView();
+        }
+        [HttpPost]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -138,6 +144,32 @@ namespace RegisterLogin.Presentation.Controllers
                 return Json(new { success = false, message = "ایمیل وارد شده معتبر نیست." });
             }
             //return RedirectToAction("ResetPassword", new { email = forgot.Email });
+            var htmlContent = ViewRendererUtils.RenderRazorViewToString(this, "~/Views/Login/ForgotPasswordStep2.cshtml", new ForgotPasswordViewModel { Email = forgot.Email });
+            return Json(new { success = true, html = htmlContent, email = forgot.Email });
+        }
+        public IActionResult VerifyCode(string email)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (string.IsNullOrEmpty(email))
+            {
+                return RedirectToAction("ForgotPassword");
+            }
+            return PartialView(new ForgotPasswordViewModel { Email = email });
+        }
+        [HttpPost]
+        public IActionResult VerifyCode(ForgotPasswordViewModel forgot)
+        {
+            if (forgot.VerificationCode == 0)
+            {
+                return Json(new { success = false, message = "لطفا کد تایید را وارد کنید" });
+            }
+            if (forgot.VerificationCode != 11111)
+            {
+                return Json(new { success = false, message = "کد وارد شده صحیح نیست" });
+            }
             var htmlContent = ViewRendererUtils.RenderRazorViewToString(this, "~/Views/Login/ResetPassword.cshtml", new ResetPasswordViewModel { Email = forgot.Email });
             return Json(new { success = true, html = htmlContent, email = forgot.Email });
         }

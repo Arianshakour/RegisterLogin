@@ -39,7 +39,8 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" asp-controller="Login" asp-action="Logout">خروج</a>
+                                        @* <a class="dropdown-item" asp-controller="Login" asp-action="Logout">خروج</a> *@
+                                        <a type="button" class="dropdown-item" onclick="logoutform()" style="color:black">خروج</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" type="button" onclick="loadChangePasswordPage()" style="color:black">تغییر کلمه عبور</a>
