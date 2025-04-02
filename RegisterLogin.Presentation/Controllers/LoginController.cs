@@ -205,10 +205,7 @@ namespace RegisterLogin.Presentation.Controllers
                 return RedirectToAction("Login", "Login");
             }
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
-            var model = new ChangePasswordViewModel
-            {
-                Email = email
-            };
+            var model = _loginService.changePassword(email);
             return PartialView(model);
         }
         [HttpPost]
